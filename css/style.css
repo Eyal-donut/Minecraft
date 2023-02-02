@@ -146,3 +146,9 @@ ul.tools li {
 .leaf {
   background: url(/assets/WEBP/leaf.webp) no-repeat center center/cover;
 }
+.sun {
+  background: rgb(227, 227, 44)
+}
+.cloud {
+  background: #f6f5f5
+}
