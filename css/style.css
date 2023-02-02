@@ -127,4 +127,10 @@ ul.tools li {
   border-radius: 0.5rem;
 }
 
+.grass {
+  background: url(/assets/WEBP/grass.webp) no-repeat center center/cover;
+}
 
+.dirt {
+  background: url(/assets/WEBP/dirt.webp) no-repeat center center/cover;
+}
