@@ -1,47 +1,50 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/reset.css">
-    <link rel="stylesheet" href="/css/normalize.css">
-    <link rel="stylesheet" href="/css/variables.css">
-    <link rel="stylesheet" href="/css/style.css">
-    <link rel="stylesheet" href="/css/mediaQuery.css">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/css/reset.css" />
+    <link rel="stylesheet" href="/css/normalize.css" />
+    <link rel="stylesheet" href="/css/variables.css" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/mediaQuery.css" />
     <title>Minecraft</title>
     <script type="module" src="/minecraft.js"></script>
-</head>
-<body>
-    <div class="background-container">
-        <div class="navbar flex-row">
-            <div class="lives-bar flex-row">
-                <div class="heart"></div>
-                <div class="heart"></div>
-                <div class="heart"></div>
-                <div class="heart"></div>
-                <div class="heart"></div>
+  </head>
+  <body>
+    <div id="background-container">
+
+        <div id="game-screen-container">
+            <div class="navbar flex-row">
+                <div class="lives-bar flex-row">
+                  <div class="heart"></div>
+                  <div class="heart"></div>
+                  <div class="heart"></div>
+                  <div class="heart"></div>
+                  <div class="heart"></div>
+                </div>
+                <ul class="nav-buttons flex-row">
+                  <li>Restart</li>
+                  <li>Home</li>
+                </ul>
             </div>
-            <ul class="nav-buttons flex-row">
-                <li>Restart</li>
-                <li>Home</li>
-            </ul>
+
+            <div id="grid-and-toolbar-container">
+                <div id="game-grid"></div>
+                <div class="tools-bar flex-row">
+                    <ul class="tools">
+                        <li id="axe"></li>
+                        <li id="shovel"></li>
+                        <li id="pick"></li>
+                        <li id="bucket"></li>
+                    </ul>
+                <div class="storage"></div>
+                </div>
+            </div>
+
         </div>
-
-        <div class="tools-bar flex-row">
-            <ul class="tools">
-                <li id="axe"></li>
-                <li id="shovel"></li>
-                <li id="pick"></li>
-                <li id="bucket"></li>
-            </ul>
-
-            <div class="storage"></div>
-        </div>
-
-
 
     </div>
-    
-</body>
+  </body>
 </html>
