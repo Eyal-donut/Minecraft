@@ -118,13 +118,22 @@ ul.tools li {
   background: url(/assets/bucket2.png) no-repeat center center/cover;
 }
 
-.storage {
-  width: 9rem;
-  height: 9rem;
-  box-shadow: 0.3rem 0.3rem 0.3rem rgb(0, 0, 0, 0.5);
-  margin-left: 6rem;
-  background: url(/assets/inventory.JPG) no-repeat center center/cover;
+ul.inventory {
+  margin-left: 5rem;
   border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.inventory li {
+  width: 8rem;
+  height: 8rem;
+  box-shadow: 0.3rem 0.3rem 0.3rem rgb(0, 0, 0, 0.5);
+  margin-left: 1rem;
+  border-radius: 0.5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .grass {

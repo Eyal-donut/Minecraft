@@ -23,19 +23,6 @@ class Materials {
     this.type = type;
   }
 
-  static createMaterial(type, rowStart, rowEnd, columnStart, columnEnd) {
-    for (let row = rowStart; row <= rowEnd; ++row) {
-      for (let column = columnStart; column <= columnEnd; ++column) {
-        const materialElement = document.createElement("div");
-        materialElement.style.gridRowStart = row;
-        materialElement.style.gridColumnStart = column;
-        materialElement.classList.add(`${type}`);
-        gameGrid.appendChild(materialElement);
-      }
-    }
-  }
-
-
   static makeDisappear() {
     // **function  makeDissapear() -  if you click on it with the correct active tool, it sets its background to '.no-background'
     materialElement.addEventListener("click", function () {
@@ -85,41 +72,6 @@ Tools.activateByClick(shovel);
 Tools.activateByClick(pick);
 Tools.activateByClick(bucket);
 
-//---------------------------------------------------------------------Created map-----------------------------------------------------
-
-Materials.createMaterial("dirt", 12, 15, 1, 14);
-Materials.createMaterial("dirt", 12, 15, 23, 37);
-Materials.createMaterial("dirt", 13, 15, 13, 15);
-Materials.createMaterial("dirt", 13, 15, 22, 23);
-
-Materials.createMaterial("grass", 11, 11, 1, 14);
-Materials.createMaterial("grass", 11, 11, 23, 37);
-
-Materials.createMaterial("water", 11, 12, 15, 22);
-Materials.createMaterial("water", 13, 15, 16, 21);
-
-Materials.createMaterial("rock", 10, 10, 14, 14);
-Materials.createMaterial("rock", 9, 9, 15, 15);
-Materials.createMaterial("rock", 8, 8, 16, 16);
-Materials.createMaterial("rock", 8, 8, 17, 21);
-Materials.createMaterial("rock", 9, 9, 22, 22);
-Materials.createMaterial("rock", 10, 10, 23, 23);
-
-Materials.createMaterial("wood", 7, 10, 30, 30);
-Materials.createMaterial("leaf", 3, 6, 29, 31);
-
-Materials.createMaterial("cloud", 3, 4, 10, 12);
-Materials.createMaterial("cloud", 2, 3, 12, 14);
-Materials.createMaterial("cloud", 1, 2, 13, 16);
-
-Materials.createMaterial("cloud", 1, 2, 24, 25);
-Materials.createMaterial("cloud", 2, 3, 22, 25);
-Materials.createMaterial("cloud", 3, 4, 24, 27);
-Materials.createMaterial("cloud", 2, 3, 26, 26);
-
-Materials.createMaterial("sun", 1, 4, 2, 5);
-
-
 //----------------------------------------------------------------------------
 
 // function createMaterial() {
@@ -133,46 +85,74 @@ Materials.createMaterial("sun", 1, 4, 2, 5);
 //   gridSquare.classList.add('dirt');
 //   console.log(gridSquare)
 // }
-// function addMaterial(){
-//     if (
-//         activeToolOrMaterial !== axe &&
-//         activeToolOrMaterial !== pick &&
-//         activeToolOrMaterial !== shovel &&
-//         activeToolOrMaterial !== bucket
-//       )
-//         this.classList.add(activeToolOrMaterial);
-// }
+
+//-----------------------------------------------Help functions
+function removeMaterial(element, toolVariable, type) {
+  if (activeToolOrMaterial === toolVariable && element.className === type) {
+    element.classList.remove(type);
+    //add to inventory
+    //update inventory photo
+  }
+}
+
+
+function addMaterial(input) {
+  if (
+    activeToolOrMaterial !== axe &&
+    activeToolOrMaterial !== pick &&
+    activeToolOrMaterial !== shovel &&
+    activeToolOrMaterial !== bucket
+  )
+    input.classList.add(activeToolOrMaterial);
+}
 
 //--------------------------------------------------------Classes
-export default class Grid {
+class Grid {
   constructor(row, column) {
     this.row = row;
     this.column = column;
   }
-  static clickHandler(callBack) {
+  static createEmptyGrid() {
     for (let row = 1; row <= totalGridRows; ++row) {
       for (let column = 1; column <= totalGridColumns; ++column) {
         const gridSquare = document.createElement("div");
+        gridSquare.classList.add("empty");
         gridSquare.style.gridRowStart = row;
         gridSquare.style.gridColumnStart = column;
         gameGrid.appendChild(gridSquare);
-        gridSquare.addEventListener("click", callBack);
       }
     }
   }
-  static clickAddMaterial() {
-    activeToolOrMaterial = "dirt";
-    if (
-      activeToolOrMaterial !== axe &&
-      activeToolOrMaterial !== pick &&
-      activeToolOrMaterial !== shovel &&
-      activeToolOrMaterial !== bucket
-    )
-      this.classList.add(activeToolOrMaterial);
+
+  static createMap(type, rowStart, rowEnd, columnStart, columnEnd) {
+    for (let row = rowStart; row <= rowEnd; ++row) {
+      for (let column = columnStart; column <= columnEnd; ++column) {
+        const materialElement = document.createElement("div");
+        materialElement.style.gridRowStart = row;
+        materialElement.style.gridColumnStart = column;
+        materialElement.classList.add(`${type}`);
+        gameGrid.appendChild(materialElement);
+      }
+    }
   }
- 
+
+  static clickHandler() {
+    gameGrid.addEventListener("click", function (e) {
+        removeMaterial(e.target, axe, 'wood')
+        removeMaterial(e.target, shovel, 'dirt')
+        removeMaterial(e.target, shovel, 'grass')
+        removeMaterial(e.target, pick, 'rock')
+        removeMaterial(e.target, bucket, 'water')
+      
+       if (e.target.className === "empty") {
+          e.target.classList.remove("empty");
+          addMaterial(e.target);
+         }
+    });
+  }
 }
-Grid.clickHandler(Grid.clickAddMaterial);
+Grid.createEmptyGrid();
+Grid.clickHandler();
 // Grid.clickHandler(Grid.removeMaterial);
 
 //click event on tool:
@@ -183,3 +163,37 @@ Grid.clickHandler(Grid.clickAddMaterial);
 //click on material in inventory: makes the material active.
 //click on somewhere on the screen adds the material to there, and deactivates the tools
 //click on the screen: if there is an element on the screen - do nothing. If empty: **function: calculate row and column. **call method Materials.createMaterial
+
+//---------------------------------------------------------------------Created map-----------------------------------------------------
+
+Grid.createMap("dirt", 12, 15, 1, 14);
+Grid.createMap("dirt", 12, 15, 23, 37);
+Grid.createMap("dirt", 13, 15, 13, 15);
+Grid.createMap("dirt", 13, 15, 22, 23);
+
+Grid.createMap("grass", 11, 11, 1, 14);
+Grid.createMap("grass", 11, 11, 23, 37);
+
+Grid.createMap("water", 11, 12, 15, 22);
+Grid.createMap("water", 13, 15, 16, 21);
+
+Grid.createMap("rock", 10, 10, 14, 14);
+Grid.createMap("rock", 9, 9, 15, 15);
+Grid.createMap("rock", 8, 8, 16, 16);
+Grid.createMap("rock", 8, 8, 17, 21);
+Grid.createMap("rock", 9, 9, 22, 22);
+Grid.createMap("rock", 10, 10, 23, 23);
+
+Grid.createMap("wood", 7, 10, 30, 30);
+Grid.createMap("leaf", 3, 6, 29, 31);
+
+Grid.createMap("cloud", 3, 4, 10, 12);
+Grid.createMap("cloud", 2, 3, 12, 14);
+Grid.createMap("cloud", 1, 2, 13, 16);
+
+Grid.createMap("cloud", 1, 2, 24, 25);
+Grid.createMap("cloud", 2, 3, 22, 25);
+Grid.createMap("cloud", 3, 4, 24, 27);
+Grid.createMap("cloud", 2, 3, 26, 26);
+
+Grid.createMap("sun", 1, 4, 2, 5);
