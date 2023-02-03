@@ -1,5 +1,8 @@
+
 //--------------------------------------------------------global variables
 let activeToolOrMaterial = 'dirt';
+let gridSquare = '';
+console.log(activeToolOrMaterial)
 
 
 //--------------------------------------------------------Grid variables 
@@ -8,37 +11,62 @@ const gameGrid = document.getElementById('game-grid')
 const totalGridRows = 15 
 const totalGridColumns = 35 
 
+
+//--------------------------------------------------------Tools variables----------------------------------------------------------
+const axe = document.getElementById('axe')
+const shovel = document.getElementById('shovel')
+const pick = document.getElementById('pick')
+const bucket = document.getElementById('bucket')
 //--------------------------------------------------------helping functions
 
 
 
 
+function createMaterial(){
+    if (activeToolOrMaterial !== axe &&
+        activeToolOrMaterial !== pick &&
+        activeToolOrMaterial !== shovel &&
+        activeToolOrMaterial !== bucket)
+   gridSquare.classList.add(activeToolOrMaterial)
+   alert('hi')
+}
+
 
 //--------------------------------------------------------Classes
-class Grid{
+export default class Grid{
     constructor(row, column){
         this.row = row;
         this.column = column;
     }
-    static createClickableGrid(){
-        for(let row = 1; row <= totalGridRows; ++row){
-            for(let column = 1; column <= totalGridColumns; ++column){
-                const gridSquare = document.createElement('div')
-                gridSquare.classList.add('empty')
-                gridSquare.style.gridRowStart = row
-                gridSquare.style.gridColumnStart = column
-                gameGrid.appendChild(gridSquare);
-                gridSquare.addEventListener('click', function addMaterial(){
-                    gridSquare.classList.add(activeToolOrMaterial)
+    static createClickableGrid(callbackFunc){
+        gameGrid.addEventListener('click', function(){
+            for (let row = 1; row <= totalGridRows; ++row){
+                for(let column = 1; column <= totalGridColumns; ++column){
+                    gridSquare = document.createElement('div')
+                    gridSquare.classList.add('empty')
+                    gridSquare.style.gridRowStart = row
+                    gridSquare.style.gridColumnStart = column
+                    gameGrid.appendChild(gridSquare);
+                    // addMaterial(){
+                        //     if (activeToolOrMaterial !== axe &&
+                        //          activeToolOrMaterial !== pick &&
+                        //          activeToolOrMaterial !== shovel &&
+                        //          activeToolOrMaterial !== bucket)
+                        //     gridSquare.classList.add(activeToolOrMaterial)
+                        
+                        // })
+                    }
+                }
+                callbackFunc()
 
-                })
-            }
-        }
+        })
 
     }
   
 }
-Grid.createClickableGrid();
+
+Grid.createClickableGrid()
+
 
 
 
@@ -63,13 +91,16 @@ class Materials{
                 // materialsArray.push(material)     
             }
         }
+        return gameGrid
         // console.log(materialsArray)
         // return materialsArray;
     }
 
     static makeDisappear(){
-        // **function  makeDissapear() -  if you click on it with the correct active tool, it sets its background to '.no-background'. 
-
+        // **function  makeDissapear() -  if you click on it with the correct active tool, it sets its background to '.no-background'
+        materialElement.addEventListener('click', function(){
+            materialElement.classList.remove('grass');
+        })
     }
 
     static collectMaterial(){
@@ -83,6 +114,7 @@ class Materials{
    
 
 }
+console.log(gameGrid)
 
 class Inventory extends Materials {
     constructor(type, row, column, count){
@@ -99,6 +131,10 @@ const waterInventory = new Inventory('water', -1, -1, false, 0)
 const stoneInventory = new Inventory('stone', -1, -1, false, 0)
 //add the rest of the elements to the inventory
 
+
+
+
+
 class Tools{
     constructor(name){
         this.name = name;
@@ -107,11 +143,17 @@ class Tools{
 
     }
 
-    static activateTool(){
-//2. tool active mode is on. it's property active is true, and it toggles the active property of the rest to false (add as a method in the class - set active). *function: toggle active property, with input of active tool, so only this is active and te rest are not.
-//!better idea: define a global variable of active, that updates with each click
+    static activateByClick(toolVariable){
+        toolVariable.addEventListener('click', function(){
+            activeToolOrMaterial = toolVariable
+            console.log(activeToolOrMaterial)
+        })
     }
 }
+Tools.activateByClick(axe)
+Tools.activateByClick(shovel)
+Tools.activateByClick(pick)
+Tools.activateByClick(bucket)
 
 //---------------------------------------------------------------------Created map-----------------------------------------------------
 
