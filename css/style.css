@@ -53,6 +53,7 @@ li {
   grid-template-rows: repeat(15, 1fr);
   grid-template-columns: repeat(35, 1fr);
   justify-self: flex-end;
+  cursor: pointer;
 }
 
 .navbar {
