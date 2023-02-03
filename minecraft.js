@@ -14,7 +14,15 @@ const axe = document.getElementById("axe");
 const shovel = document.getElementById("shovel");
 const pick = document.getElementById("pick");
 const bucket = document.getElementById("bucket");
-//--------------------------------------------------------helping functions
+//--------------------------------------------------------Inventory variables
+const waterInventory = document.getElementById("water-inventory");
+const rockInventory = document.getElementById("rock-inventory");
+const leafInventory = document.getElementById("leaf-inventory");
+const woodInventory = document.getElementById("wood-inventory");
+const dirtInventory = document.getElementById("dirt-inventory");
+const grassInventory = document.getElementById("grass-inventory");
+
+//-----------------------------------------------------------
 
 class Materials {
   constructor(type, row, column) {
@@ -23,15 +31,7 @@ class Materials {
     this.type = type;
   }
 
-  static makeDisappear() {
-    // **function  makeDissapear() -  if you click on it with the correct active tool, it sets its background to '.no-background'
-    materialElement.addEventListener("click", function () {
-      materialElement.classList.remove("grass");
-    });
-  }
-
   static collectMaterial() {
-    // **function  makeDissapear() -  if you click on it with the currect active tool, it sets its background to '.no-background'.
     //If it's the first collection of the material, it updates the photo of a square in the inventory to the material
     //**function: Update inventory: waterInventory.count +=1. Also update local storage.
     //**function: update photo: add the class that you need (water, dirt etc) to the inventory slot.
@@ -40,61 +40,49 @@ class Materials {
 }
 console.log(gameGrid);
 
-class Inventory extends Materials {
-  constructor(type, row, column, count) {
-    super(type, row, column);
-    this.count = count;
-  }
-
-  static calculateCoordinates() {
-    //find row and column
-  }
-}
-const waterInventory = new Inventory("water", -1, -1, false, 0);
-const stoneInventory = new Inventory("stone", -1, -1, false, 0);
-//add the rest of the elements to the inventory
-
-class Tools {
-  constructor(name) {
-    this.name = name;
-  }
-  static cursorToTool() {}
-
-  static activateByClick(toolVariable) {
-    toolVariable.addEventListener("click", function () {
-      activeToolOrMaterial = toolVariable;
-      console.log(activeToolOrMaterial);
-    });
-  }
-}
-Tools.activateByClick(axe);
-Tools.activateByClick(shovel);
-Tools.activateByClick(pick);
-Tools.activateByClick(bucket);
-
 //----------------------------------------------------------------------------
 
-// function createMaterial() {
-//   if (
-//     activeToolOrMaterial !== axe &&
-//     activeToolOrMaterial !== pick &&
-//     activeToolOrMaterial !== shovel &&
-//     activeToolOrMaterial !== bucket
-//   )
-//   gridSquare.classList.remove('empty');
-//   gridSquare.classList.add('dirt');
-//   console.log(gridSquare)
-// }
+//!-----------------------------------------------Help functions
 
-//-----------------------------------------------Help functions
-function removeMaterial(element, toolVariable, type) {
-  if (activeToolOrMaterial === toolVariable && element.className === type) {
-    element.classList.remove(type);
-    //add to inventory
-    //update inventory photo
+function addToInventory(type) {
+  switch (type) {
+    case "water":
+      ++waterInventory.innerText;
+      break;
+    case "wood":
+      ++woodInventory.innerText;
+      break;
+    case "dirt":
+      ++dirtInventory.innerText;
+      break;
+    case "grass":
+      ++grassInventory.innerText;
+      break;
+    case "rock":
+      ++rockInventory.innerText;
+      break;
+    case "leaf":
+      ++leafInventory.innerText;
   }
 }
 
+function removeMaterial(element, type) {
+  if (
+    (activeToolOrMaterial === axe && element.className === "wood") ||
+    (activeToolOrMaterial === axe && element.className === "leaf") ||
+    (activeToolOrMaterial === shovel && element.className === "dirt") ||
+    (activeToolOrMaterial === shovel && element.className === "grass") ||
+    (activeToolOrMaterial === pick && element.className === "rock") ||
+    (activeToolOrMaterial === bucket && element.className === "water")
+  ) {
+    element.setAttribute("class", "empty");
+    addToInventory(type);
+  }
+}
+
+function build() {}
+
+// function activateByClick(){}
 
 function addMaterial(input) {
   if (
@@ -106,7 +94,22 @@ function addMaterial(input) {
     input.classList.add(activeToolOrMaterial);
 }
 
+//!-----------------------------------------------------------------Window Event listeners
+document.addEventListener("click", function (e) {
+  if (e.target === axe) activeToolOrMaterial = axe;
+  if (e.target === shovel) activeToolOrMaterial = shovel;
+  if (e.target === pick) activeToolOrMaterial = pick;
+  if (e.target === bucket) activeToolOrMaterial = bucket;
+  if (e.target === waterInventory) activeToolOrMaterial = waterInventory;
+  if (e.target === woodInventory) activeToolOrMaterial = woodInventory;
+  if (e.target === rockInventory) activeToolOrMaterial = rockInventory;
+  if (e.target === dirtInventory) activeToolOrMaterial = dirtInventory;
+  if (e.target === grassInventory) activeToolOrMaterial = grassInventory;
+  if (e.target === leafInventory) activeToolOrMaterial = leafInventory;
+});
+
 //--------------------------------------------------------Classes
+
 class Grid {
   constructor(row, column) {
     this.row = row;
@@ -138,16 +141,13 @@ class Grid {
 
   static clickHandler() {
     gameGrid.addEventListener("click", function (e) {
-        removeMaterial(e.target, axe, 'wood')
-        removeMaterial(e.target, shovel, 'dirt')
-        removeMaterial(e.target, shovel, 'grass')
-        removeMaterial(e.target, pick, 'rock')
-        removeMaterial(e.target, bucket, 'water')
-      
-       if (e.target.className === "empty") {
-          e.target.classList.remove("empty");
-          addMaterial(e.target);
-         }
+      removeMaterial(e.target, e.target.className);
+      build();
+
+      if (e.target.className === "empty") {
+        e.target.classList.remove("empty");
+        addMaterial(e.target);
+      }
     });
   }
 }
