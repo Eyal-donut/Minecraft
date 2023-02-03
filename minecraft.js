@@ -1,7 +1,8 @@
 //--------------------------------------------------------global variable -------------------------------------------------------------
 let activeToolOrMaterial = "dirt";
+let changedArray = [];
 
-//----------------------------------------------------------Restart-Button---------------------------------------------------------------
+//-----------------------------------------------------------Buttons -------------------------------------------------------------------
 const restart = document.getElementById("restart");
 
 //--------------------------------------------------------Grid variables------------------------------------------------------------------
@@ -11,11 +12,14 @@ const totalGridRows = 15;
 const totalGridColumns = 35;
 
 //--------------------------------------------------------Tools variables-----------------------------------------------------------------
+
 const axe = document.getElementById("axe");
 const shovel = document.getElementById("shovel");
 const pick = document.getElementById("pick");
 const bucket = document.getElementById("bucket");
+
 //--------------------------------------------------------Inventory variables---------------------------------------------------------------
+
 const waterInventory = document.getElementById("water-inventory");
 const rockInventory = document.getElementById("rock-inventory");
 const leafInventory = document.getElementById("leaf-inventory");
@@ -108,11 +112,13 @@ document.addEventListener("click", function (e) {
   if (e.target === dirtInventory) activeToolOrMaterial = dirtInventory;
   if (e.target === grassInventory) activeToolOrMaterial = grassInventory;
   if (e.target === leafInventory) activeToolOrMaterial = leafInventory;
+  localStorage.setItem("active-tool-or-material", activeToolOrMaterial);
 });
 
-restart.addEventListener("click", function(){
+restart.addEventListener("click", function () {
   window.location.reload();
 });
+
 
 //?--------------------------------------------------------------------Class Grid -------------------------------------------------------------
 
@@ -150,7 +156,6 @@ class Grid {
       addMaterial(e.target);
     });
   }
-
 
   static initiate() {
     Grid.createEmptyGrid();

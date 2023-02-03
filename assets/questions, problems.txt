@@ -1,0 +1,2 @@
+1. Questions: how do I save everything to local storag? If I would have had all the game into one object than it would be possible... but no.
+2. To set everything back to zero? I removed classes, to add them back I'd need to target each element that I changed. I could put all of the in an array, but then I would still not know who got a new class, who had his class removed etc.
