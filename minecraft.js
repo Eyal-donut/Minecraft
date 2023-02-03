@@ -1,6 +1,5 @@
 //--------------------------------------------------------global variables
 let activeToolOrMaterial = "dirt";
-// let gridSquare = "";
 console.log(activeToolOrMaterial);
 
 //--------------------------------------------------------Grid variables
@@ -24,23 +23,6 @@ const grassInventory = document.getElementById("grass-inventory");
 
 //-----------------------------------------------------------
 
-class Materials {
-  constructor(type, row, column) {
-    this.row = row;
-    this.column = column;
-    this.type = type;
-  }
-
-  static collectMaterial() {
-    //If it's the first collection of the material, it updates the photo of a square in the inventory to the material
-    //**function: Update inventory: waterInventory.count +=1. Also update local storage.
-    //**function: update photo: add the class that you need (water, dirt etc) to the inventory slot.
-    //It updates a global variable of the number of the item and saves it to the local storage
-  }
-}
-console.log(gameGrid);
-
-//----------------------------------------------------------------------------
 
 //!-----------------------------------------------Help functions
 
@@ -80,21 +62,38 @@ function removeMaterial(element, type) {
   }
 }
 
-function build() {}
+function addMaterial(clickTarget) {
 
-// function activateByClick(){}
+    if (activeToolOrMaterial === waterInventory && waterInventory.innerText > 0) {
+        clickTarget.classList.add('water');
+        --waterInventory.innerText
+    }
+    if (activeToolOrMaterial === woodInventory && woodInventory.innerText > 0) {
+        clickTarget.classList.add('wood');
+        --woodInventory.innerText
+    }
+    if (activeToolOrMaterial === rockInventory && rockInventory.innerText > 0) {
+        clickTarget.classList.add('rock');
+        --rockInventory.innerText
+    }
+    if (activeToolOrMaterial === leafInventory && leafInventory.innerText > 0) {
+        clickTarget.classList.add('leaf');
+        --leafInventory.innerText
+    }
+    if (activeToolOrMaterial === dirtInventory && dirtInventory.innerText > 0) {
+        clickTarget.classList.add('dirt');
+        --dirtInventory.innerText
+    }
+    if (activeToolOrMaterial === grassInventory && grassInventory.innerText > 0) {
+        clickTarget.classList.add('grass');
+        --grassInventory.innerText
+    }
 
-function addMaterial(input) {
-  if (
-    activeToolOrMaterial !== axe &&
-    activeToolOrMaterial !== pick &&
-    activeToolOrMaterial !== shovel &&
-    activeToolOrMaterial !== bucket
-  )
-    input.classList.add(activeToolOrMaterial);
+    
+    console.log(clickTarget)
 }
 
-//!-----------------------------------------------------------------Window Event listeners
+//!-----------------------------------------------------------------Window Event listener-------------------------------------------------------
 document.addEventListener("click", function (e) {
   if (e.target === axe) activeToolOrMaterial = axe;
   if (e.target === shovel) activeToolOrMaterial = shovel;
@@ -108,7 +107,7 @@ document.addEventListener("click", function (e) {
   if (e.target === leafInventory) activeToolOrMaterial = leafInventory;
 });
 
-//--------------------------------------------------------Classes
+//?------------------------------------------------------------------------Class Grid ------------------------------
 
 class Grid {
   constructor(row, column) {
@@ -139,11 +138,9 @@ class Grid {
     }
   }
 
-  static clickHandler() {
+  static gridClickHandler() {
     gameGrid.addEventListener("click", function (e) {
       removeMaterial(e.target, e.target.className);
-      build();
-
       if (e.target.className === "empty") {
         e.target.classList.remove("empty");
         addMaterial(e.target);
@@ -152,17 +149,15 @@ class Grid {
   }
 }
 Grid.createEmptyGrid();
-Grid.clickHandler();
-// Grid.clickHandler(Grid.removeMaterial);
+Grid.gridClickHandler();
+
+
+//?---------------------------------------------------------------------------------------------------------------------------------------
+
 
 //click event on tool:
 //1. cursor becomes the tool.
-//redefine active global variable
-// if you click on a material, it changes it so it disappears
 
-//click on material in inventory: makes the material active.
-//click on somewhere on the screen adds the material to there, and deactivates the tools
-//click on the screen: if there is an element on the screen - do nothing. If empty: **function: calculate row and column. **call method Materials.createMaterial
 
 //---------------------------------------------------------------------Created map-----------------------------------------------------
 
