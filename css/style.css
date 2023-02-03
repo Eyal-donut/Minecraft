@@ -46,7 +46,7 @@ li {
 }
 
 #game-grid {
-  background-color: #ccc;
+  /* background-color: #ccc; */
   width: 100%;
   height: 76rem;
   display: grid;
@@ -152,3 +152,8 @@ ul.tools li {
 .cloud {
   background: #f6f5f5
 }
+
+.no-background {
+  background: none;
+}
+
