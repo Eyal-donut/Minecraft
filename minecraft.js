@@ -1,19 +1,18 @@
-//--------------------------------------------------------global variables
+//--------------------------------------------------------global variable -------------------------------------------------------------
 let activeToolOrMaterial = "dirt";
-console.log(activeToolOrMaterial);
 
-//--------------------------------------------------------Grid variables
+//--------------------------------------------------------Grid variables------------------------------------------------------------------
 
 const gameGrid = document.getElementById("game-grid");
 const totalGridRows = 15;
 const totalGridColumns = 35;
 
-//--------------------------------------------------------Tools variables----------------------------------------------------------
+//--------------------------------------------------------Tools variables-----------------------------------------------------------------
 const axe = document.getElementById("axe");
 const shovel = document.getElementById("shovel");
 const pick = document.getElementById("pick");
 const bucket = document.getElementById("bucket");
-//--------------------------------------------------------Inventory variables
+//--------------------------------------------------------Inventory variables---------------------------------------------------------------
 const waterInventory = document.getElementById("water-inventory");
 const rockInventory = document.getElementById("rock-inventory");
 const leafInventory = document.getElementById("leaf-inventory");
@@ -21,10 +20,10 @@ const woodInventory = document.getElementById("wood-inventory");
 const dirtInventory = document.getElementById("dirt-inventory");
 const grassInventory = document.getElementById("grass-inventory");
 
-//-----------------------------------------------------------
+//-----------------------------------------------------------------------------------------------------------------------------------------
 
 
-//!-----------------------------------------------Help functions
+//!---------------------------------------------------------------Global functions -------------------------------------------------------
 
 function addToInventory(type) {
   switch (type) {
@@ -93,7 +92,8 @@ function addMaterial(clickTarget) {
     console.log(clickTarget)
 }
 
-//!-----------------------------------------------------------------Window Event listener-------------------------------------------------------
+//!---------------------------------------------------Window Event listener- "Click to activate"-----------------------------------------------
+
 document.addEventListener("click", function (e) {
   if (e.target === axe) activeToolOrMaterial = axe;
   if (e.target === shovel) activeToolOrMaterial = shovel;
@@ -107,7 +107,7 @@ document.addEventListener("click", function (e) {
   if (e.target === leafInventory) activeToolOrMaterial = leafInventory;
 });
 
-//?------------------------------------------------------------------------Class Grid ------------------------------
+//?--------------------------------------------------------------------Class Grid -------------------------------------------------------------
 
 class Grid {
   constructor(row, column) {
